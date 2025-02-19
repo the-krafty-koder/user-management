@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
 
 @Module({
-  imports: [UsersModule, SharedModule],
+  imports: [SharedModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

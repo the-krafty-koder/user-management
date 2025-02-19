@@ -10,8 +10,7 @@ export class FirebaseService implements OnModuleInit {
       try {
         admin.initializeApp({
           credential: admin.credential.cert(
-            process.env.FIREBASE_SERVICE_ACCOUNT_KEY ||
-              '../../../credentials/firebase-adminsdk.json',
+            process.env.FIREBASE_SERVICE_ACCOUNT_KEY!,
           ),
         });
       } catch (error) {
@@ -20,7 +19,6 @@ export class FirebaseService implements OnModuleInit {
       }
     }
     this.db = admin.firestore();
-    console.log(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
   }
 
   getFirestore() {

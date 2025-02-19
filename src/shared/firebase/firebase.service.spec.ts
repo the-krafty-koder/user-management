@@ -9,7 +9,6 @@ jest.mock('firebase-admin', () => {
     doc: jest.fn().mockReturnThis(),
     get: jest.fn().mockResolvedValue({ exists: true, data: () => ({}) }), // Example: Mock get()
     add: jest.fn().mockResolvedValue({ id: 'mockId' }),
-    // ... mock other Firestore methods as you use them
   };
 
   return {
