@@ -4,10 +4,9 @@ import * as admin from 'firebase-admin';
 
 jest.mock('firebase-admin', () => {
   const mockFirestore = {
-    // Mock Firestore methods as needed for your tests
-    collection: jest.fn().mockReturnThis(), // Example: Mock collection()
+    collection: jest.fn().mockReturnThis(),
     doc: jest.fn().mockReturnThis(),
-    get: jest.fn().mockResolvedValue({ exists: true, data: () => ({}) }), // Example: Mock get()
+    get: jest.fn().mockResolvedValue({ exists: true, data: () => ({}) }),
     add: jest.fn().mockResolvedValue({ id: 'mockId' }),
   };
 
@@ -17,7 +16,7 @@ jest.mock('firebase-admin', () => {
       cert: jest.fn(),
     },
     firestore: jest.fn(() => mockFirestore),
-    apps: { length: 0 }, // Simulate not being initialized
+    apps: { length: 0 },
   };
 });
 

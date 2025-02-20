@@ -1,27 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
-import { FirebaseService } from '../shared/firebase/firebase.service'; // Import Firebase Service
+import { FirebaseService } from '../shared/firebase/firebase.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BadRequestException } from '@nestjs/common';
-
-// const mockFirestore = {
-//   // Mock Firestore methods as needed for your tests
-//   collection: jest.fn().mockReturnThis(), // Example: Mock collection()
-//   doc: jest.fn().mockReturnThis(),
-//   get: jest.fn().mockResolvedValue({ exists: true, data: () => ({}) }),
-//   add: jest.fn().mockResolvedValue({ id: 'mockId' }),
-//   where: jest.fn().mockReturnThis(),
-// };
-// jest.mock('firebase-admin', () => {
-//   return {
-//     initializeApp: jest.fn(),
-//     credential: {
-//       cert: jest.fn(),
-//     },
-//     firestore: jest.fn(() => mockFirestore),
-//     apps: { length: 0 }, // Simulate not being initialized
-//   };
-// });
 
 describe('UsersService', () => {
   let usersService: UsersService;
@@ -49,6 +30,7 @@ describe('UsersService', () => {
 
     usersService = module.get<UsersService>(UsersService);
     firebaseService = module.get<FirebaseService>(FirebaseService);
+    usersService.onModuleInit();
   });
 
   it('should be defined', () => {

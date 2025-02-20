@@ -1,4 +1,3 @@
-// src/users/users.resolver.ts
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './users.model';

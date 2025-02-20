@@ -32,7 +32,6 @@ export class UsersService {
       const userSnapshot = await userRef.get();
       return { id: userSnapshot.id, ...userSnapshot.data() };
     } catch (error) {
-      console.error('Error creating user:', error);
       throw error;
     }
   }
@@ -64,7 +63,6 @@ export class UsersService {
       }
       return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
-      console.error('Error finding user:', error);
       throw error;
     }
   }
@@ -89,7 +87,6 @@ export class UsersService {
       await this.db.collection('users').doc(id).update(updateObject);
       return this.findOne(id);
     } catch (error) {
-      console.error('Error updating user:', error);
       throw error;
     }
   }
