@@ -15,7 +15,7 @@
 
 3.  **Firebase:**
 
-    - A firestore database is already configured for the project. The service account key located in src/shared/firebase/serviceAccountKey.json is used to connect to the remote DB.
+    - A firestore database is already configured for the project. The service account key located in src/shared/firebase/serviceAccountKey.json is used to connect to the remote DB. I've intentionally added it to make project setup easier.
 
 4.  **Environment Variables:**
 
