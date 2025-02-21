@@ -13,15 +13,11 @@ export class WebhookService implements OnModuleInit {
   }
 
   async storeMessage(message: WhatsappMessageDto) {
-    try {
-      await this.db.collection('messages').add({
-        message: message.message,
-        phone: message.phone,
-        timestamp: new Date(),
-      });
-    } catch (error) {
-      throw error;
-    }
+    await this.db.collection('messages').add({
+      message: message.message,
+      phone: message.phone,
+      timestamp: new Date(),
+    });
   }
 
   generateReply(message: WhatsappMessageDto) {

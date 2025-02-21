@@ -3,11 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { FirebaseService } from '../src/shared/firebase/firebase.service';
+import { MockFirestore } from 'src/users/users.service.spec';
+import { Http2Server } from 'http2';
 
 describe('UsersController (e2e) - Pagination', () => {
   let app: INestApplication;
-  let firebaseService: FirebaseService;
-  let mockFirestore: any;
+  let mockFirestore: Partial<MockFirestore>;
 
   beforeAll(async () => {
     mockFirestore = {
@@ -61,7 +62,7 @@ describe('UsersController (e2e) - Pagination', () => {
   });
 
   it('should return paginated users (first page)', async () => {
-    const response = await request(app.getHttpServer())
+    const response = await request(app.getHttpServer() as Http2Server)
       .get('/users?limit=2')
       .expect(200);
 
@@ -75,7 +76,7 @@ describe('UsersController (e2e) - Pagination', () => {
   });
 
   it('should return paginated users (second page)', async () => {
-    const response = await request(app.getHttpServer())
+    const response = await request(app.getHttpServer() as Http2Server)
       .get('/users?limit=2&startAfter=user2')
       .expect(200);
 

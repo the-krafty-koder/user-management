@@ -19,7 +19,7 @@ export class MessagesGateway implements OnGatewayInit, OnModuleInit {
     this.setupFirestoreListener();
   }
 
-  afterInit(server: Server) {}
+  afterInit() {}
 
   private setupFirestoreListener() {
     this.db

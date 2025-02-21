@@ -13,28 +13,29 @@ jest.mock('socket.io', () => {
 
 describe('MessagesGateway', () => {
   let gateway: MessagesGateway;
-  let firebaseService: FirebaseService;
   let server: Server;
 
   const mockFirebaseService = {
     getFirestore: jest.fn(() => ({
       collection: jest.fn(() => ({
         orderBy: jest.fn(() => ({
-          onSnapshot: jest.fn((callback) => {
-            const mockSnapshot = {
-              docs: [
-                {
-                  id: '1',
-                  data: () => ({ message: 'Hello', phone: '+12345' }),
-                },
-                {
-                  id: '2',
-                  data: () => ({ message: 'World', phone: '+67890' }),
-                },
-              ],
-            };
-            callback(mockSnapshot);
-          }),
+          onSnapshot: jest.fn(
+            (callback: (snapshot: Record<string, unknown>) => void) => {
+              const mockSnapshot = {
+                docs: [
+                  {
+                    id: '1',
+                    data: () => ({ message: 'Hello', phone: '+12345' }),
+                  },
+                  {
+                    id: '2',
+                    data: () => ({ message: 'World', phone: '+67890' }),
+                  },
+                ],
+              };
+              callback(mockSnapshot);
+            },
+          ),
         })),
       })),
     })),
@@ -49,7 +50,6 @@ describe('MessagesGateway', () => {
     }).compile();
 
     gateway = module.get<MessagesGateway>(MessagesGateway);
-    firebaseService = module.get<FirebaseService>(FirebaseService);
     server = new Server();
     gateway.server = server;
     gateway.onModuleInit();
@@ -60,8 +60,6 @@ describe('MessagesGateway', () => {
   });
 
   it('should emit messages on Firestore snapshot change', () => {
-    gateway.afterInit(server);
-
     expect(server.emit).toHaveBeenCalledWith('messages', [
       { id: '1', message: 'Hello', phone: '+12345' },
       { id: '2', message: 'World', phone: '+67890' },

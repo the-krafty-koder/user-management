@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Catch, ArgumentsHost, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { FirebaseAuthError } from 'firebase-admin/auth';

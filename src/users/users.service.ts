@@ -14,22 +14,18 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    try {
-      const emailQuerySnapshot = await this.db
-        .collection('users')
-        .where('email', '==', createUserDto.email)
-        .get();
+    const emailQuerySnapshot = await this.db
+      .collection('users')
+      .where('email', '==', createUserDto.email)
+      .get();
 
-      if (!emailQuerySnapshot.empty) {
-        throw new BadRequestException('Email already exists');
-      }
-
-      const userRef = await this.db.collection('users').add(createUserDto);
-      const userSnapshot = await userRef.get();
-      return { id: userSnapshot.id, ...userSnapshot.data() };
-    } catch (error) {
-      throw error;
+    if (!emailQuerySnapshot.empty) {
+      throw new BadRequestException('Email already exists');
     }
+
+    const userRef = await this.db.collection('users').add(createUserDto);
+    const userSnapshot = await userRef.get();
+    return { id: userSnapshot.id, ...userSnapshot.data() };
   }
 
   async findAll(limit = 10, startAfter?: string) {
@@ -52,38 +48,33 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    try {
-      const userDoc = await this.db.collection('users').doc(id).get();
-      if (!userDoc.exists) {
-        throw new BadRequestException(`User with ID ${id} not found`);
-      }
-      return { id: userDoc.id, ...userDoc.data() };
-    } catch (error) {
-      throw error;
+    const userDoc = await this.db.collection('users').doc(id).get();
+    if (!userDoc.exists) {
+      throw new BadRequestException(`User with ID ${id} not found`);
     }
+    return { id: userDoc.id, ...userDoc.data() };
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    try {
-      const userDoc = await this.db.collection('users').doc(id).get();
-      if (!userDoc.exists) {
-        throw new BadRequestException(`User with ID ${id} not found`);
-      }
-
-      const existingUserData = userDoc.data();
-
-      if (
-        updateUserDto.email &&
-        existingUserData &&
-        updateUserDto.email !== existingUserData.email
-      ) {
-        throw new BadRequestException('Email cannot be updated');
-      }
-      const updateObject = JSON.parse(JSON.stringify(updateUserDto));
-      await this.db.collection('users').doc(id).update(updateObject);
-      return this.findOne(id);
-    } catch (error) {
-      throw error;
+    const userDoc = await this.db.collection('users').doc(id).get();
+    if (!userDoc.exists) {
+      throw new BadRequestException(`User with ID ${id} not found`);
     }
+
+    const existingUserData = userDoc.data();
+
+    if (
+      updateUserDto.email &&
+      existingUserData &&
+      updateUserDto.email !== existingUserData.email
+    ) {
+      throw new BadRequestException('Email cannot be updated');
+    }
+
+    await this.db
+      .collection('users')
+      .doc(id)
+      .update(updateUserDto as Record<string, unknown>);
+    return this.findOne(id);
   }
 }

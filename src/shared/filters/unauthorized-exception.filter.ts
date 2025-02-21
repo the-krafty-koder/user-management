@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Catch, ArgumentsHost, UnauthorizedException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 

@@ -4,10 +4,16 @@ import { FirebaseService } from '../shared/firebase/firebase.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BadRequestException } from '@nestjs/common';
 
+export interface MockFirestore {
+  collection: jest.Mock;
+  where: jest.Mock;
+  get: jest.Mock;
+  add: jest.Mock;
+}
+
 describe('UsersService', () => {
   let usersService: UsersService;
-  let firebaseService: FirebaseService;
-  let mockFirestore: any;
+  let mockFirestore: MockFirestore;
 
   beforeEach(async () => {
     mockFirestore = {
@@ -29,7 +35,6 @@ describe('UsersService', () => {
     }).compile();
 
     usersService = module.get<UsersService>(UsersService);
-    firebaseService = module.get<FirebaseService>(FirebaseService);
     usersService.onModuleInit();
   });
 

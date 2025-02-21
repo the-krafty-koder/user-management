@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { WebhookService } from './webhook.service';
 import { FirebaseService } from '../shared/firebase/firebase.service';
 import { WhatsappMessageDto } from './dto/message.dto';
+import { MockFirestore } from '../users/users.service.spec';
 
 describe('WebhookService', () => {
   let service: WebhookService;
-  let firebaseService: FirebaseService;
-  let mockFirestore: any;
-  let mockAdd: any;
+  let mockFirestore: Partial<MockFirestore>;
+  let mockAdd: jest.Mock;
 
   beforeEach(async () => {
     mockAdd = jest.fn().mockResolvedValue(undefined);
@@ -28,7 +28,6 @@ describe('WebhookService', () => {
     }).compile();
 
     service = module.get<WebhookService>(WebhookService);
-    firebaseService = module.get<FirebaseService>(FirebaseService);
     service.onModuleInit();
   });
 
@@ -50,7 +49,7 @@ describe('WebhookService', () => {
     expect(mockAdd).toHaveBeenCalledWith({
       message: 'Hello',
       phone: '+1234567890',
-      timestamp: expect.any(Date),
+      timestamp: expect.any(Date), // eslint-disable-line @typescript-eslint/no-unsafe-assignment
     });
   });
 

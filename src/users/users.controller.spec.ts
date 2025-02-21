@@ -6,7 +6,6 @@ import { BadRequestException } from '@nestjs/common';
 
 describe('UsersController', () => {
   let usersController: UsersController;
-  let usersService: UsersService;
 
   const mockUsersService = {
     create: jest.fn(),
@@ -19,7 +18,6 @@ describe('UsersController', () => {
     }).compile();
 
     usersController = module.get<UsersController>(UsersController);
-    usersService = module.get<UsersService>(UsersService);
   });
 
   it('should be defined', () => {
