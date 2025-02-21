@@ -187,6 +187,74 @@
     }
     ```
 
+### GraphQL Resolver
+
+- On browser, visit localhost:3000/graphql
+
+  **Retrieve all users**
+
+  - Request:
+
+    ```
+      query {
+        users{
+          id
+          name
+          email
+          phone
+        }
+      }
+    ```
+
+  - Response:
+
+        ```
+          {
+
+            "data": {
+              "users": {
+                "id": "fEKr338FU2bvfNtdDMUB",
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "phone": "+254792291302"
+              }
+            }
+          }
+
+        ```
+
+  **Fetch a single user**
+
+  - Request:
+
+    ```
+      query {
+        user(id: "uwqcqNvIX4lvMkPvt6bq") {
+          id
+          name
+          email
+          phone
+        }
+      }
+    ```
+
+  - Response:
+
+        ```
+          {
+
+            "data": {
+              "user": {
+                "id": "fEKr338FU2bvfNtdDMUB",
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "phone": "+254792291302"
+              }
+            }
+          }
+
+        ```
+
 ## Design Decisions
 
 **Pagination with Cursors:** Uses Firestore cursors to efficiently load large datasets, making pagination smooth and scalable.

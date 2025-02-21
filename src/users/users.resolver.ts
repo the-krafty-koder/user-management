@@ -8,7 +8,8 @@ export class UsersResolver {
 
   @Query(() => [User])
   async users() {
-    return this.usersService.findAll();
+    const { users } = await this.usersService.findAll();
+    return users;
   }
 
   @Query(() => User, { nullable: true })

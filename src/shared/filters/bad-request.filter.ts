@@ -5,12 +5,20 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { GraphQLError } from 'graphql';
 
 @Catch(HttpException)
 export class BadRequestFilter extends BaseExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
+    const ctx = host.getType<string>();
+
+    if (ctx === 'graphql') {
+      // Handle GraphQL errors properly
+      throw new GraphQLError(exception.message);
+    }
+
+    const httpCtx = host.switchToHttp();
+    const response = httpCtx.getResponse();
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse();
 

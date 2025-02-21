@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FirebaseService } from '../shared/firebase/firebase.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -59,7 +55,7 @@ export class UsersService {
     try {
       const userDoc = await this.db.collection('users').doc(id).get();
       if (!userDoc.exists) {
-        throw new NotFoundException(`User with ID ${id} not found`);
+        throw new BadRequestException(`User with ID ${id} not found`);
       }
       return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
@@ -71,7 +67,7 @@ export class UsersService {
     try {
       const userDoc = await this.db.collection('users').doc(id).get();
       if (!userDoc.exists) {
-        throw new NotFoundException(`User with ID ${id} not found`);
+        throw new BadRequestException(`User with ID ${id} not found`);
       }
 
       const existingUserData = userDoc.data();
