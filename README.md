@@ -1,99 +1,206 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+## Setup Instructions
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+1.  **Clone the Repository:**
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+    ```bash
+    git clone https://github.com/the-krafty-koder/user-management.git
+    cd user-management
+    ```
 
-## Description
+2.  **Install Dependencies:**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+    ```bash
+    npm install
+    ```
 
-## Project setup
+3.  **Firebase:**
 
-```bash
-$ npm install
-```
+    - A firestore database is already configured for the project. The service account key located in src/shared/firebase/serviceAccountKey.json is used to connect to the remote DB.
 
-## Compile and run the project
+4.  **Environment Variables:**
 
-```bash
-# development
-$ npm run start
+    - A .env file is intentionally included as part of the project, containing environment variables required.
+      ```
+      FIREBASE_SERVICE_ACCOUNT_KEY=<path-to-account-key>
+      WEBHOOK_SECRET_TOKEN=<secret-token>
+      ```
 
-# watch mode
-$ npm run start:dev
+5.  **Run the Application:**
 
-# production mode
-$ npm run start:prod
-```
+    ```bash
+    npm run start
+    ```
 
-## Run tests
+## API Endpoints
 
-```bash
-# unit tests
-$ npm run test
+### User Management
 
-# e2e tests
-$ npm run test:e2e
+- **`POST /users`:** Create a new user.
 
-# test coverage
-$ npm run test:cov
-```
+  - Request Body:
 
-## Deployment
+    ```json
+    {
+      "name": "John Doe",
+      "email": "john-doe@gmail.com",
+      "phone": "+254792291300"
+    }
+    ```
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+  - Response:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+    ```json
+    {
+      "id": "uwqcqNvIX4lvMkPvt6bq",
+      "name": "John Doe",
+      "email": "john-doe@gmail.com",
+      "phone": "+1234567890"
+    }
+    ```
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+- **`GET /users`:** Get a paginated list of users.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+  - Query Parameters:
 
-## Resources
+    - `startAfter`: optional user id used to return users located after the given ID.
+    - `limit`: Number of users to return. Defaults to 10
 
-Check out a few resources that may come in handy when working with NestJS:
+  - Response:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+    - Body:
 
-## Support
+      - `users`: list of users.
+      - `nextPageToken`: User id used as startAfter to query next page .
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+    ```json
+    {
+      "users": [
+        {
+          "id": "uwqcqNvIX4lvMkPvt6bq",
+          "name": "John Doe",
+          "email": "john-doe@gmail.com",
+          "phone": "+1234567890"
+        }
+      ],
+      "nextPageToken": "uwqcqNvIX4lvMkPvt6bq"
+    }
+    ```
 
-## Stay in touch
+- **`GET /users?startAfter=<user-id>&limit=<number>`:** Use query parameters to get a paginated list of users.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+  - Query Parameters:
 
-## License
+    - `startAfter`: optional user id used to return users located after the given ID.
+    - `limit`: Number of users to return. Defaults to 10
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+  - Response:
+
+    - Body:
+
+      - `users`: list of users.
+      - `nextPageToken`: User id used as startAfter to query next page. Wont be returned if next page is empty
+
+  - Example
+
+    `GET /users?startAfter=uwqcqNvIX4lvMkPvt&limit=10`
+
+    - Response
+
+    ```json
+    {
+      "users": []
+    }
+    ```
+
+- **`GET /users/:id`:** Get a single user.
+
+  - Example
+    `GET /users/uwqcqNvIX4lvMkPvt6bq`
+
+    - Response:
+
+      ```json
+      {
+        "id": "uwqcqNvIX4lvMkPvt6bq",
+        "name": "John Doe",
+        "email": "john-doe@gmail.com",
+        "phone": "+1234567890"
+      }
+      ```
+
+- **`PATCH /users/:id`:** Update a user.
+
+  - Example
+    `PATCH /users/uwqcqNvIX4lvMkPvt6bq`
+
+    - Request Body:
+
+      ```json
+      {
+        "phone": "+254792291304"
+      }
+      ```
+
+    - Response:
+
+      ```json
+      {
+        "id": "uwqcqNvIX4lvMkPvt6bq",
+        "name": "John Doe",
+        "email": "john-doe@gmail.com",
+        "phone": "+254792291304"
+      }
+      ```
+
+### WhatsApp Webhook
+
+- **`POST /webhook`:** Simulate WhatsApp message processing.
+
+  - Headers:
+
+    - `Authorization: Bearer <WEBHOOK_SECRET_TOKEN_IN_ENV_FILE>`
+
+  - Request Body:
+
+    ```json
+    {
+      "message": "Hello, WhatsApp!",
+      "phone": "+1234567890"
+    }
+    ```
+
+  - Response:
+
+    ```json
+    {
+      "message": "Message processed successfully"
+    }
+    ```
+
+  - If the message contains "help":
+
+    ```json
+    {
+      "reply": "Support contact: support@company.com"
+    }
+    ```
+
+## Design Decisions
+
+**Pagination with Cursors:** Uses Firestore cursors to efficiently load large datasets, making pagination smooth and scalable.
+**Rate Limiting:** Controls request flow with a simple in-memory Map to prevent abuse.
+**Real-time Updates:** Uses WebSockets and Firestore's onSnapshot() to instantly send message updates to connected clients.
+**Validation with DTOs:** Ensures data integrity using Data Transfer Objects (DTOs) and class-validator for input validation.
+**Consistent Error Handling:** Global exception filters provide clear, structured error responses.
+**Modular Structure:** Organizes code into NestJS modules for better reusability and maintainability.
+**Authentication:** Secures the Webhook endpoint with a static token check.
+
+## Testing
+
+- **Unit and Integration Tests:** Run `npm test` to execute unit and integration tests.
+- **End-to-End Tests:** Run `npm run test:e2e` to execute end-to-end tests.
+
+## Future Enhancements
+
+- Use Redis or a similar persistent store for rate limiting.
+- Implement more advanced message processing logic in the webhook.
