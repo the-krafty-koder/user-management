@@ -13,9 +13,11 @@
     npm install
     ```
 
-3.  **Firebase:**
+3.  **Firebase firestore DB:**
 
-    - A firestore database is already configured for the project. The service account key located in src/shared/firebase/serviceAccountKey.json is used to connect to the remote DB. I've intentionally added it to make project setup easier.
+    - A firestore database is already configured for the project. The service account key cant be included as part of the project otherwise access to firestore will be revoked.
+    - Download the service account key from https://drive.google.com/file/d/1bsmcw6qyWfqAF926rylXyfrBNA5rJRjp/view
+    - Store it inside ./src/shared/firebase as serviceAccountKey.json for the env variables to work.
 
 4.  **Environment Variables:**
 
